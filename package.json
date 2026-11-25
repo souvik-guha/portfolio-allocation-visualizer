@@ -1,6 +1,6 @@
 {
   "name": "portfolio-allocation-visualizer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Single-file portfolio allocation visualiser with correlation-aware risk, VaR and diversification.",
   "license": "MIT",
   "author": "Souvik Guha",
@@ -8,7 +8,16 @@
     "test": "node tests/model.test.js && node tests/layout.test.js",
     "test:model": "node tests/model.test.js",
     "test:layout": "node tests/layout.test.js",
+    "lint": "eslint index.html tests && html-validate index.html",
     "screenshots": "node tests/screenshots.js"
   },
-  "devDependencies": { "puppeteer-core": "^22.0.0" }
+  "devDependencies": {
+    "puppeteer-core": "^25.18.1",
+    "eslint": "^10.15.0",
+    "eslint-plugin-html": "^8.2.1",
+    "html-validate": "^11.22.1",
+    "globals": "^16.0.0"
+  },
+  "private": true,
+  "type": "commonjs"
 }

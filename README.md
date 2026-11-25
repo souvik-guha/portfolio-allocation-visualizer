@@ -1,5 +1,7 @@
 # Portfolio Allocation Visualizer
 
+[![CI](https://github.com/souvik-guha/portfolio-allocation-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/souvik-guha/portfolio-allocation-visualizer/actions/workflows/ci.yml)
+
 A single-file, zero-dependency page that turns an asset allocation into a chart plus correlation-aware risk numbers: expected return, volatility, value-at-risk, expected shortfall and diversification.
 
 **Live:** https://souvik-guha.github.io/portfolio-allocation-visualizer/  
@@ -42,7 +44,7 @@ CHROME_PATH="/path/to/chrome" npm test
 ```
 - `tests/model.test.js` drives the real page in headless Chrome, reads the inputs from the DOM and recomputes every figure with an independent implementation. Expected shortfall is checked by numerical integration rather than the page's closed form. It covers a hand-checked reference portfolio, closed-form cases, every asset and class alone, thousands of seeded random portfolios (including custom assets, extreme returns and volatilities), non-100% totals, invalid and blank inputs, and XSS-style names. The latest run was 188,007 assertions across 8,466 scenarios with 0 failures.
 - `tests/layout.test.js` checks at 10 viewport widths (1440 down to 320 px) that no element escapes its card and nothing scrolls sideways, including with extreme values and very long names. It also checks the mobile tab navigation.
-- The page also passes ESLint (recommended-style rules), html-validate and axe-core with no violations.
+- `npm run lint` runs ESLint (including the page's inline script) and html-validate. CI runs lint and both test suites on every push.
 
 ## Files
 - `index.html` is the whole app (CSS, JS and an inlined, minified copy of [decimal.js](https://github.com/MikeMcl/decimal.js) 10.4.3, MIT).

@@ -117,7 +117,7 @@ const withdrawn = (c, o, tag) => { const ctx = tag + ' ' + JSON.stringify(c).sli
 
 (async () => {
   const t0 = Date.now();
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : [] });
   const page = await browser.newPage(); await page.setViewport({ width: 1280, height: 900 });
   const problems = [], external = [];
   page.on('console', m => { if (['error', 'warning'].includes(m.type())) problems.push(m.text()); });

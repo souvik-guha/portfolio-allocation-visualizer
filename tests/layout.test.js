@@ -1,11 +1,12 @@
 /* Layout containment: no element may poke out of its card, and the page never scrolls sideways. */
 'use strict';
+/* global caName, caClass, caAlloc, caRet, caVol, addAssetForm -- element ids resolved inside the page */
 const puppeteer = require('puppeteer-core'); const path = require('path');
 const FILE = 'file://' + path.resolve(__dirname, '..', 'index.html');
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 let pass = 0, fail = 0; const ok = (c, m) => { if (c) pass++; else { fail++; console.log('  FAIL', m); } };
 (async () => {
-  const b = await puppeteer.launch({ executablePath: CHROME, headless: 'new' }); const p = await b.newPage();
+  const b = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: process.env.CI ? ['--no-sandbox', '--disable-dev-shm-usage'] : [] }); const p = await b.newPage();
   const problems = []; p.on('console', m => { if (['error', 'warning'].includes(m.type())) problems.push(m.text()); }); p.on('pageerror', e => problems.push(e.message));
   for (const w of [1440, 1280, 1024, 960, 768, 600, 414, 390, 360, 320]) {
     await p.setViewport({ width: w, height: 900, isMobile: w < 600, deviceScaleFactor: 1 }); await p.goto(FILE, { waitUntil: 'networkidle0' });
